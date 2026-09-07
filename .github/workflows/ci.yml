@@ -1,0 +1,24 @@
+name: CI Evaluador - Soporte Técnico UETS
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  commitlint:
+    name: 🔍 Validar Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validar mensajes de commits
+        run: |
+          npx --yes @commitlint/cli --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} || npx --yes @commitlint/cli --last --verbose

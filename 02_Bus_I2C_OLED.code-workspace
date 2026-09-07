@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "name": "⚡ Semana 02: Bus I2C & Pantalla OLED",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.pio": true
+    }
+  }
+}

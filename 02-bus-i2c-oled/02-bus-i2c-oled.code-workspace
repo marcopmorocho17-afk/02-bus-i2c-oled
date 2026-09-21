@@ -1,0 +1,29 @@
+{
+  "folders": [
+    {
+      "name": "🟢 Bloque 1: Escáner I2C",
+      "path": "bloque_1"
+    },
+    {
+      "name": "🟡 Bloque 2: Inicialización OLED & Cabecera",
+      "path": "bloque_2"
+    },
+    {
+      "name": "🔵 Bloque 3: Telemetría logBoot()",
+      "path": "bloque_3"
+    },
+    {
+      "name": "🟣 Bloque 4: Reto Integrador POST",
+      "path": "bloque_4"
+    },
+    {
+      "name": "📦 Raíz del Repositorio",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.pio": true
+    }
+  }
+}

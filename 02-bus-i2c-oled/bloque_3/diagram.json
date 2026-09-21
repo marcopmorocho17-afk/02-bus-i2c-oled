@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "author": "UETS Soporte Tecnico - Ing. Milton Velasquez & Ing. Christian Japon",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": -20, "left": -50, "attrs": {} },
+    { "type": "board-ssd1306", "id": "oled", "top": 120, "left": 180, "attrs": { "i2cAddress": "0x3c" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:GND.1", "oled:GND", "black", [ "v0" ] ],
+    [ "esp:3V3", "oled:VCC", "red", [ "v0" ] ],
+    [ "esp:22", "oled:SCL", "gold", [ "v0" ] ],
+    [ "esp:21", "oled:SDA", "green", [ "v0" ] ]
+  ],
+  "dependencies": {
+    "Adafruit SSD1306": "2.5.13",
+    "Adafruit GFX Library": "1.11.11"
+  }
+}

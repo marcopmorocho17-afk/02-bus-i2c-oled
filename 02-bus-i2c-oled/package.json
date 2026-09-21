@@ -1,0 +1,28 @@
+{
+  "name": "02-bus-i2c-oled",
+  "version": "1.0.0",
+  "description": "Taller Práctico Semana 02: Bus I2C & OLED SSD1306 — Soporte Técnico UETS",
+  "private": true,
+  "scripts": {
+    "start:01": "node scripts/evaluar.js 1",
+    "start:02": "node scripts/evaluar.js 2",
+    "start:03": "node scripts/evaluar.js 3",
+    "start:04": "node scripts/evaluar.js 4",
+    "test": "node scripts/evaluar.js",
+    "test:all": "node scripts/evaluar.js",
+    "test:01": "node scripts/evaluar.js 1",
+    "test:02": "node scripts/evaluar.js 2",
+    "test:03": "node scripts/evaluar.js 3",
+    "test:04": "node scripts/evaluar.js 4",
+    "check": "node scripts/check.js"
+  },
+  "keywords": [
+    "uets",
+    "esp32",
+    "i2c",
+    "ssd1306",
+    "soporte-tecnico"
+  ],
+  "author": "Área Técnica UETS",
+  "license": "MIT"
+}

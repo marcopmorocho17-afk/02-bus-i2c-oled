@@ -12,22 +12,18 @@ void setup() {
     delay(1000);
     Serial.println("\n[SISTEMA] Arrancando microcontrolador ESP32 DevKit v4...");
 
-    // TODO 5.1: ¿Qué inicializamos primero? ¿El bus físico o los sensores?
-    // Inicia el bus I2C invocando initI2CBus()
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    initI2CBus();
 
-    // TODO 5.2: Pasa lista en el bus invocando scanI2CBus() y guarda el resultado en una variable
-    // int dispositivos = scanI2CBus();
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    int dispositivos = scanI2CBus();
+    bool displayReady = initDisplay();
 
-    // TODO 5.3: Si la pantalla se inicializa correctamente con initDisplay() Y dispositivos > 0:
-    // Ejecuta la secuencia de diagnóstico runSystemPOST().
-    // Si no, reporta un error por el Monitor Serial.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    if (displayReady && dispositivos > 0) {
+        runSystemPOST();
+    } else {
+        Serial.println("[SISTEMA] ERROR: No se pudo completar la inicialización del bus I2C o de la pantalla OLED.");
+    }
 }
 
 void loop() {
-    // La rutina de arranque (POST) corre una sola vez en setup().
-    // En las siguientes semanas aquí recibiremos comandos de telemetría.
     delay(1000);
 }

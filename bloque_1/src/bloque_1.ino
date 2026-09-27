@@ -19,31 +19,25 @@ void setup() {
     Serial.println("  [BLOQUE 1] ESCÁNER DE DIRECCIONES DE HARDWARE I2C     ");
     Serial.println("========================================================");
 
-    // TODO 1.1: Inicializar el bus I2C en los pines SDA y SCL del ESP32.
-    // Pregunta Guía: ¿Qué función de la librería Wire recibe (SDA_PIN, SCL_PIN)?
-    // Pista Conceptual: Antes de cualquier intercambio, el controlador debe saber qué dos pines físicos harán de línea de datos y de línea de reloj.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
-
-    // TODO 1.2: Configurar la velocidad del reloj a 400kHz (Modo Rápido).
-    // Pregunta Guía: ¿Qué función configura la frecuencia de reloj del bus I2C?
-    // Pista Conceptual: El protocolo arranca lento por compatibilidad; conviene elevar la frecuencia antes del primer intercambio.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
+    Wire.setClock(I2C_CLOCK_SPEED);
 
     Serial.println("[I2C] Bus configurado en SDA:GPIO21, SCL:GPIO22 a 400kHz.\n");
     Serial.println("--- INICIANDO BARRIDO DE DIRECCIONES (0x01 .. 0x7E) ---");
 
     int devicesFound = 0;
 
-    // TODO 1.3: Recorrer las direcciones válidas de 7 bits (del 1 al 126).
     for (byte address = 1; address < 127; address++) {
+        Wire.beginTransmission(address);
+        byte error = Wire.endTransmission();
 
-        // TODO 1.4: Tocar la puerta del periférico:
-        // Pista Conceptual: El bus trabaja por turnos: primero se anuncia la dirección a consultar y luego se cierra el turno leyendo si hubo respuesta.
-        /* ESCRIBE TU CÓDIGO AQUÍ */
-
-        // TODO 1.5: Evaluar la respuesta del periférico:
-        // Pregunta Guía: ¿Qué valor devuelve Wire.endTransmission() cuando el periférico responde con ACK (Presente)?
-        // Pista de Hardware: Un periférico sano confirma su presencia tirando la línea de datos a nivel bajo; si nadie contesta, la dirección se descarta y el contador no avanza.
+        if (error == 0) {
+            devicesFound++;
+            Serial.printf("[I2C] Dispositivo encontrado en 0x%02X\n", address);
+            if (address == OLED_I2C_ADDR) {
+                Serial.println("[I2C] Pantalla OLED SSD1306 detectada [OK]");
+            }
+        }
     }
 
     if (devicesFound == 0) {

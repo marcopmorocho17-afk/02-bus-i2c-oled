@@ -97,22 +97,16 @@ void runSystemPOST() {
     Serial.println("   ESP32: POWER-ON SELF TEST (POST)       ");
     Serial.println("==========================================");
 
-    // TODO 4.1: Mostrar la cabecera visual del sistema antes de diagnosticar.
-    // Pista Conceptual: La cabecera es un bloque ya construido más arriba; pensá cuál de
-    // esas rutinas dibuja el título y su línea divisoria.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    showBootHeader();
 
-    // TODO 4.2: Reportar los 4 subsistemas de la estación (ESP32, bus I2C, pantalla y batería)
-    // usando la rutina de telemetría reutilizable, todos en estado correcto.
-    // Pista Conceptual: Una sola rutina sirve para los cuatro renglones; el nombre del módulo
-    // y su estado se pasan como argumentos.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    logBoot("ESP32", true);
+    logBoot("I2C", true);
+    logBoot("OLED", true);
+    logBoot("BATERIA", true);
 
     delay(500);
 
-    // TODO 4.3: Cerrar el arranque mostrando la barra final de sistema listo.
-    // Pista Conceptual: Es la otra rutina ya construida más arriba que cierra la secuencia.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    showSystemReady();
 }
 
 void setup() {
@@ -124,12 +118,14 @@ void setup() {
     Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN);
     Wire.setClock(I2C_CLOCK_SPEED);
 
-    // TODO 4.4: Orquestar la secuencia de arranque: censar el bus, y solo si hay al menos
-    // un periférico presente y la pantalla quedó operativa, lanzar la rutina POST.
-    // Si algo falta, informar la falla por el Monitor Serie.
-    // Pista Conceptual: Recordá que el censo devuelve un número y el arranque de la pantalla
-    // devuelve un valor lógico: los dos tienen que estar bien para continuar.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    int devicesFound = scanI2CBus();
+    bool displayReady = initDisplay();
+
+    if (devicesFound > 0 && displayReady) {
+        runSystemPOST();
+    } else {
+        Serial.println("[BOOT] ERROR: No hay periféricos en el bus o la pantalla no respondió.");
+    }
 }
 
 void loop() {

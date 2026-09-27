@@ -18,21 +18,15 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET_PIN);
 
 // Función modular reutilizable para imprimir módulos con estado alineado
 void logBoot(const char* moduleName, bool isOk) {
-    // TODO 3.1: Imprimir el nombre del módulo en la posición actual del cursor:
-    // Pista Conceptual: Escribí el nombre del módulo sin avanzar de renglón, para conservar la fila donde luego se alineará el estado.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
-
-    // TODO 3.2: Alinear el estado a la derecha en la columna X=95 sin alterar la fila Y actual.
-    // Pregunta Guía: ¿Por qué usamos display.getCursorY() en lugar de un número fijo como 20?
-    // Pista Conceptual: Para que los estados queden en columna, reubicá el origen de escritura en la misma fila pero en una coordenada horizontal fija.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
-
-    // TODO 3.3: Según el valor de isOk (true/false), imprimir "[OK]" o "[ERR]":
-    // Pista Conceptual: El estado depende del valor booleano recibido: un valor verdadero muestra confirmación y uno falso muestra error.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
-
-    // TODO 3.4: Volcar los cambios del buffer al vidrio físico y pausar 200ms para efecto visual:
-    // Pista Conceptual: Nada llega al vidrio hasta que se vuelca la memoria intermedia; agregá una pausa breve para que el ojo siga la secuencia.
+    display.print(moduleName);
+    display.setCursor(95, display.getCursorY());
+    if (isOk) {
+        display.println("[OK]");
+    } else {
+        display.println("[ERR]");
+    }
+    display.display();
+    delay(200);
 }
 
 void setup() {
@@ -58,9 +52,10 @@ void setup() {
     display.setCursor(0, 14); // Deja el cursor listo en la primera fila de datos
     display.display();
 
-    // TODO 3.5: Probar la función logBoot() con dos módulos de prueba:
-    // Pista Conceptual: Invocá la función de telemetría una vez por cada módulo de prueba, indicando su nombre y si superó la verificación.
-    /* ESCRIBE TU CÓDIGO AQUÍ */
+    logBoot("ESP32", true);
+    logBoot("I2C", true);
+    logBoot("OLED", true);
+    logBoot("BAT", true);
 
     Serial.println("[BLOQUE 3] Telemetría renderizada correctamente.");
 }
